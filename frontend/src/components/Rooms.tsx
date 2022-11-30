@@ -13,6 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import Container from '@mui/material/Container';
 import { RoomInterface } from "../models/IRoom";
 
+
 function Rooms() {
     const [rooms, setRoom] = React.useState<RoomInterface[]>([]);
     const getRoom = async() => {
@@ -53,14 +54,14 @@ function Rooms() {
               color="primary"
               gutterBottom
             >
-              บันทึกรายละเอียดห้อง
+              ข้อมูลห้อง
             </Typography>
           </Box>
           
           <Box>
             <Button
               component={RouterLink}
-              to="/create"
+              to="/createroom"
               variant="contained"
               color="primary"
             >

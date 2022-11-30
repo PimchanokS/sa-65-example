@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/PimchanokS/sa-64-example/controller"
 	"github.com/PimchanokS/sa-64-example/entity"
+	"github.com/PimchanokS/sa-64-example/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,27 +13,31 @@ func main() {
 
 	r := gin.Default()
 	r.Use(CORSMiddleware())
-	// Employee Routes
 
-	r.POST("/createroom", controller.CreateRoom) //
-	r.GET("/room", controller.ListRoom)
+	api := r.Group("")
+	{
+		protected := api.Use(middlewares.Authorizes())
+		{
+			protected.POST("/createroom", controller.CreateRoom) //สร้าง Room
+			protected.GET("/room", controller.ListRoom) //ดึง Room
 
-	r.GET("/type", controller.ListType)
+			protected.GET("/type", controller.ListType) //ดึง Type
 
-	r.GET("/employee/:id", controller.GetEmployee)
-	r.GET("/employee/:id", controller.ListEmployee)
+			protected.GET("/employee/:id", controller.GetEmployee) //ดึง Employee ด้วย id
+			protected.GET("/employee", controller.ListEmployee) //ดึง Employee
 
-	r.GET("/building", controller.ListBuilding)
+			protected.GET("/building", controller.ListBuilding) //ดึง Building
 
-	r.GET("/serviceday", controller.ListServiceDay)
+			protected.GET("/serviceday", controller.ListServiceDay) //ดึง ServiceDay
 
-	r.GET("/period", controller.ListPeriod)
+			protected.GET("/period", controller.ListPeriod) //ดึง Period
 
+		}
+	}
+	// Authentication Routes
 	r.POST("/login", controller.Login)
-
 	// Run the server
 	r.Run()
-
 }
 func CORSMiddleware() gin.HandlerFunc {
 

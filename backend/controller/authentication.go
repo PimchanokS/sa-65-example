@@ -25,7 +25,7 @@ type LoginResponse struct {
 func Login(c *gin.Context) {
 	var payload SigninPayload
 	var employee entity.Employee
-
+	// ผลลัพธ์ที่ได้จากการ login จะถูก bind เข้าตัวแปร payload
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

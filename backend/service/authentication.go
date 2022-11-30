@@ -36,7 +36,6 @@ func (j *JwtWrapper) GenerateToken(email string) (signedToken string, err error)
 	if err != nil {
 		return
 	}
-
 	return
 }
 
@@ -53,7 +52,6 @@ func (j *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaim, err er
 	if err != nil {
 		return
 	}
-
 	claims, ok := token.Claims.(*JwtClaim)
 	if !ok {
 		err = errors.New("Couldn't parse claims")

@@ -6,7 +6,6 @@ import (
 	"net/http"
 )
 
-
 func ListBuilding(c *gin.Context){
 	var Building []entity.Building
 	if err := entity.DB().Table("buildings").Find(&Building).Error; err != nil{

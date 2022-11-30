@@ -8,7 +8,7 @@ import (
 )
 
 func CreateRoom(c *gin.Context) {
-
+	
 	var room entity.Room
 	var employee entity.Employee
 	var ttype entity.Type
@@ -21,34 +21,39 @@ func CreateRoom(c *gin.Context) {
 		return
 	}
 
-	// 10: ค้นหา employee ด้วย id
-	if tx := entity.DB().Where("id = ?", room.EmployeeID).First(&employee); tx.RowsAffected == 0 {
+	// 10: ค้นหา employee ด้วย id 
+	if tx := entity.DB().Where("id = ?", room.EmployeeID).First(&employee); tx.RowsAffected == 0 { //First = เอาไอดีอันแรกที่แมทช์มาเลยไม่ต้องไปหาตัวอื่น
 		c.JSON(http.StatusBadRequest, gin.H{"error": "employee not found"})
+		return
 	}
 
 	// 11: ค้นหา type ด้วย id
 	if tx := entity.DB().Where("id = ?", room.TypeID).First(&ttype); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "room type not found"})
+		return
 	}
 
 	// 12: ค้นหา building ด้วย id
 	if tx := entity.DB().Where("id = ?", room.BuildingID).First(&building); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "building type not found"})
+		return
 	}
 
 	// 13: ค้นหา serviceday ด้วย id
 	if tx := entity.DB().Where("id = ?", room.ServiceDayID).First(&serviceday); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Service day not found"})
+		return
 	}
 
 	// 14: ค้นหา period ด้วย id
 	if tx := entity.DB().Where("id = ?", room.PeriodID).First(&period); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "period not found"})
+		return
 	}
 
 	// 15: สร้าง Room
 	WV := entity.Room{	
-		Number: 	room.Number,	// ตั้งค่าฟิลด์ RoomName
+		Number: 	room.Number,	// ตั้งค่าฟิลด์ Number
 		Employee:   employee,   	// โยงความสัมพันธ์กับ Entity employee
 		Type:       ttype,      // โยงความสัมพันธ์กับ Entity Type
 		Building:   building,   // โยงความสัมพันธ์กับ Entity Building
@@ -65,7 +70,7 @@ func CreateRoom(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": WV})
 }
 
-// GET /employee
+// GET /room
 func ListRoom(c *gin.Context) {
 	var room []entity.Room
 	if err := entity.DB().Table("rooms").Preload("Employee").Preload("Type").Preload("Building").Preload("ServiceDay").Preload("Period").Find(&room).Error; err != nil {
@@ -74,3 +79,4 @@ func ListRoom(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
+

@@ -112,6 +112,4 @@ func SetupDatabase() {
 		Time: "17:00 - 20:00",
 	}
 	db.Model(&Period{}).Create(&Period3)
-
-
 }

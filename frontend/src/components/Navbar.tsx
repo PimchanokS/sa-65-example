@@ -20,7 +20,7 @@ function Navbar() {
   const menu = [
     { name: "หน้าแรก", icon: <HomeIcon  />, path: "/" },
     { name: "ข้อมูลห้อง", icon: <BedroomParentIcon  />, path: "/room" },
-    { name: "บันทึกรายละเอียดห้อง", icon: <AssignmentIcon  />, path: "/create" },
+    { name: "บันทึกรายละเอียดห้อง", icon: <AssignmentIcon  />, path: "/createroom" },
   ]
   const [openDrawer, setOpenDrawer] = React.useState(false);
   

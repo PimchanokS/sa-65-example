@@ -9,7 +9,7 @@ import (
 // GET /employee/:id
 func GetEmployee(c *gin.Context) {
 	var employee entity.Employee
-	id := c.Param("id")
+	id := c.Param("id") //ค้นหา id ใน parameter ที่ตรงกับ id ที่ต้องการดึง
 	if err := entity.DB().Table("employees").Where("id = ?",id).Find(&employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
